@@ -15,5 +15,5 @@ log                      = "0.4"
 actix-web                = "3"
 thiserror                = "1"
 parse-display            = "0.4"
-num-traits               = "*" # whatever prometheus_exporter_base pulls in
+num-traits               = "0.2" # whatever prometheus_exporter_base pulls in
 itertools                = "0.9"
