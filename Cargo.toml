@@ -1,8 +1,14 @@
 [package]
-name = "prometheus-mpd-exporter"
-version = "0.1.0"
-authors = ["Matthias Beyer <mail@beyermatthias.de>"]
-edition = "2018"
+name          = "prometheus-mpd-exporter"
+version       = "0.1.0"
+authors       = ["Matthias Beyer <mail@beyermatthias.de>"]
+edition       = "2018"
+description   = "Export MPD metrics to prometheus"
+keywords      = ["prometheus", "mpd", "logging", "util"]
+categories    = ["web-programming::http-server"]
+readme        = "./README.md"
+license       = "GPL-2.0"
+repository    = "https://git.beyermatthi.as/prometheus-mpd-exporter/"
 
 [dependencies]
 anyhow                   = "1"
