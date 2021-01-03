@@ -93,13 +93,13 @@ async fn metrics_handler(mpd_data: web::Data<Mutex<MpdClient>>) -> Result<String
     let instance = String::new(); // TODO
 
     let res = vec![
-        Metric::new("uptime"      , stats.uptime      , "The uptime of mpd", &instance).into_metric()?,
-        Metric::new("playtime"    , stats.playtime    , "The playtime of the current playlist", &instance).into_metric()?,
-        Metric::new("artists"     , stats.artists     , "The number of artists", &instance).into_metric()?,
-        Metric::new("albums"      , stats.albums      , "The number of albums", &instance).into_metric()?,
-        Metric::new("songs"       , stats.songs       , "The number of songs", &instance).into_metric()?,
-        Metric::new("db_playtime" , stats.db_playtime , "The database playtime", &instance).into_metric()?,
-        Metric::new("db_update"   , stats.db_update   , "The updates of the database", &instance).into_metric()?,
+        Metric::new("mpd_uptime"      , stats.uptime      , "The uptime of mpd", &instance).into_metric()?,
+        Metric::new("mpd_playtime"    , stats.playtime    , "The playtime of the current playlist", &instance).into_metric()?,
+        Metric::new("mpd_artists"     , stats.artists     , "The number of artists", &instance).into_metric()?,
+        Metric::new("mpd_albums"      , stats.albums      , "The number of albums", &instance).into_metric()?,
+        Metric::new("mpd_songs"       , stats.songs       , "The number of songs", &instance).into_metric()?,
+        Metric::new("mpd_db_playtime" , stats.db_playtime , "The database playtime", &instance).into_metric()?,
+        Metric::new("mpd_db_update"   , stats.db_update   , "The updates of the database", &instance).into_metric()?,
     ]
     .into_iter()
     .map(|m| {
