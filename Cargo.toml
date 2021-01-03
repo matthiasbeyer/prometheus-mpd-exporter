@@ -1,0 +1,13 @@
+[package]
+name = "prometheus-mpd-exporter"
+version = "0.1.0"
+authors = ["Matthias Beyer <mail@beyermatthias.de>"]
+edition = "2018"
+
+[dependencies]
+anyhow                   = "1"
+async-mpd                = "0.4"
+env_logger               = "0.8"
+prometheus_exporter_base = { version = "1.1", features = ["hyper_server"] }
+structopt                = "0.3"
+
