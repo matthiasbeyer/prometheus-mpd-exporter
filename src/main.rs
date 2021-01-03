@@ -1,11 +1,4 @@
-use std::cell::Cell;
-use std::convert::Infallible;
-use std::io;
-use std::net::SocketAddr;
-use std::sync::Arc;
 use std::sync::Mutex;
-use std::sync::atomic::{AtomicUsize, Ordering};
-use std::convert::TryInto;
 
 use actix_web::HttpResponse;
 use actix_web::http::StatusCode;
@@ -15,13 +8,9 @@ use actix_web::HttpServer;
 use actix_web::Responder;
 use actix_web::middleware;
 use actix_web::web;
-use actix_web::get;
-use anyhow::Context;
-use anyhow::Error;
 use actix_web::Result;
 use async_mpd::MpdClient;
 use getset::Getters;
-use prometheus_exporter_base::prelude::*;
 use structopt::StructOpt;
 use itertools::Itertools;
 
@@ -64,13 +53,13 @@ struct Opt {
 #[derive(Debug, Clone, Default)]
 struct PrometheusOptions {}
 
-async fn index(mpd_data: web::Data<Mutex<MpdClient>>, req: HttpRequest) -> impl Responder {
+async fn index(_: web::Data<Mutex<MpdClient>>, _: HttpRequest) -> impl Responder {
     HttpResponse::build(StatusCode::OK)
         .content_type("text/text; charset=utf-8")
         .body(String::from("Running"))
 }
 
-async fn metrics(mpd_data: web::Data<Mutex<MpdClient>>, req: HttpRequest) -> impl Responder {
+async fn metrics(mpd_data: web::Data<Mutex<MpdClient>>, _: HttpRequest) -> impl Responder {
     match metrics_handler(mpd_data).await {
         Ok(text) => {
             HttpResponse::build(StatusCode::OK)
