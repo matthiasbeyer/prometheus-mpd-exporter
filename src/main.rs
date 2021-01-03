@@ -65,7 +65,13 @@ struct Opt {
 struct PrometheusOptions {}
 
 async fn index(mpd_data: web::Data<Mutex<MpdClient>>, req: HttpRequest) -> impl Responder {
-    match index_handler(mpd_data).await {
+    HttpResponse::build(StatusCode::OK)
+        .content_type("text/text; charset=utf-8")
+        .body(String::from("Running"))
+}
+
+async fn metrics(mpd_data: web::Data<Mutex<MpdClient>>, req: HttpRequest) -> impl Responder {
+    match metrics_handler(mpd_data).await {
         Ok(text) => {
             HttpResponse::build(StatusCode::OK)
                 .content_type("text/text; charset=utf-8")
@@ -80,7 +86,7 @@ async fn index(mpd_data: web::Data<Mutex<MpdClient>>, req: HttpRequest) -> impl 
     }
 }
 
-async fn index_handler(mpd_data: web::Data<Mutex<MpdClient>>) -> Result<String, ApplicationError> {
+async fn metrics_handler(mpd_data: web::Data<Mutex<MpdClient>>) -> Result<String, ApplicationError> {
     let mut mpd = mpd_data.lock().unwrap();
     let stats = mpd.stats().await?;
 
@@ -125,6 +131,7 @@ async fn main() -> Result<(), ApplicationError> {
             .app_data(mpd.clone()) // add shared state
             .wrap(middleware::Logger::default())
             .route("/", web::get().to(index))
+            .route("/metrics", web::get().to(metrics))
     })
     .bind(prometheus_bind_addr)?
     .run()
